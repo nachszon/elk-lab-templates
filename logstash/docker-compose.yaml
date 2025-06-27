@@ -1,0 +1,24 @@
+# docker-compose.yaml for Logstash
+# This template defines a Logstash container that listens on a specified port
+# and loads pipeline configuration from a mounted file.
+# Replace {{ }} placeholders with your actual values.
+
+version: "3.8"  # Comment this line out when using 'docker compose' instead of 'docker-compose'
+
+services:
+  logstash:
+    image: {{LOGSTASH_IMAGE}}  # e.g. docker.elastic.co/logstash/logstash:7.17.13
+    container_name: {{CONTAINER_NAME}}  # e.g. logstash
+    volumes:
+      - {{LOCAL_LOGSTASH_CONF}}:/usr/share/logstash/pipeline/logstash.conf  # e.g. ./logstash/logstash.conf
+      - {{LOCAL_LOGSTASH_DATA}}:/usr/share/logstash/data  # e.g. ./logstash/data
+    ports:
+      - "{{LOGSTASH_PORT}}:5044"  # e.g. 5044:5044
+    networks:
+      - elastic
+    environment:
+      xpack.monitoring.enabled: false  # Disable X-Pack monitoring (optional for labs)
+
+networks:
+  elastic:
+    driver: bridge
