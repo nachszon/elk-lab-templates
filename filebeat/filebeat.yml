@@ -12,10 +12,10 @@ services:
     user: root
     command: ["filebeat", "-e", "--strict.perms=false"]
     volumes:
-      - {{LOCAL_FILEBEAT_YML}}:/usr/share/filebeat/filebeat.yml
-      - {{LOG_SOURCE_PATH}}:{{LOG_SOURCE_PATH}}:ro
+      - {{LOCAL_FILEBEAT_YML}}:/usr/share/filebeat/filebeat.yml  # e.g. ./filebeat/filebeat.yml
+      - {{LOG_SOURCE_PATH}}:{{LOG_SOURCE_PATH}}:ro  # e.g. /opt/app-logs:/opt/app-logs:ro
     environment:
-      elasticsearch_hosts: "{{ELASTICSEARCH_HOST}}"
+      elasticsearch_hosts: "{{ELASTICSEARCH_HOST}}"  # e.g. http://localhost:9200
     networks:
       - elastic
 
