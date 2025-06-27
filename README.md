@@ -25,3 +25,16 @@ This repository is designed for learning, experimenting, and quickly launching a
 git clone https://github.com/nachszon/elk-lab-templates.git
 cd elk-lab-templates
 docker-compose up
+
+Requirements
+
+    Docker & Docker Compose
+
+    RAM: minimum 4–8 GB for full stack
+
+    Ensure ports 9200, 5601, etc. are available
+
+📚 Purpose
+
+This repository serves as a base for testing and learning the ELK stack. Feel free to use, modify, and extend these templates to suit your needs.
+
