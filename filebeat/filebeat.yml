@@ -1,0 +1,24 @@
+# docker-compose.yaml for Filebeat
+# This template defines a Filebeat container that reads logs from a mounted directory
+# and forwards them to an Elasticsearch instance over HTTP.
+# Replace placeholder values (in {{ }} brackets) with actual paths, hostnames, and image tags.
+
+version: "3.8"
+
+services:
+  filebeat:
+    image: {{FILEBEAT_IMAGE}}  # e.g. docker.elastic.co/beats/filebeat:7.17.13
+    container_name: {{CONTAINER_NAME}}  # e.g. filebeat
+    user: root
+    command: ["filebeat", "-e", "--strict.perms=false"]
+    volumes:
+      - {{LOCAL_FILEBEAT_YML}}:/usr/share/filebeat/filebeat.yml
+      - {{LOG_SOURCE_PATH}}:{{LOG_SOURCE_PATH}}:ro
+    environment:
+      elasticsearch_hosts: "{{ELASTICSEARCH_HOST}}"
+    networks:
+      - elastic
+
+networks:
+  elastic:
+    driver: bridge
