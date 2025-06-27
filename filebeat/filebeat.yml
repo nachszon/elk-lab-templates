@@ -2,6 +2,9 @@
 # This template defines a Filebeat container that reads logs from a mounted directory
 # and forwards them to an Elasticsearch instance over HTTP.
 # Replace placeholder values (in {{ }} brackets) with actual paths, hostnames, and image tags.
+#
+# NOTE: If you're using the newer `docker compose` CLI (without dash), 
+#       you may comment out the `version:` line below – it's optional and may cause a warning.
 
 version: "3.8"
 
