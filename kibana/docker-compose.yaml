@@ -1,0 +1,26 @@
+# docker-compose.yaml for Kibana
+# Launches a Kibana instance connected to the same Elasticsearch network.
+# Uses a separate environment file for configuration.
+
+version: "3.8"  # Comment this line out if using 'docker compose'
+
+services:
+  kibana:
+    image: {{KIBANA_IMAGE}}  # e.g. docker.elastic.co/kibana/kibana:7.17.13
+    container_name: {{CONTAINER_NAME}}  # e.g. kibana
+    ports:
+      - "{{KIBANA_PORT}}:5601"  # e.g. 5601:5601
+    volumes:
+      - kibana_data:/usr/share/kibana/data
+    networks:
+      - elastic
+    env_file:
+      - {{ENV_FILE_PATH}}  # e.g. ./kibana/kibana.env
+
+networks:
+  elastic:
+    driver: bridge
+
+volumes:
+  kibana_data:
+    driver: local
