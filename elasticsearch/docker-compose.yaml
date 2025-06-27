@@ -1,0 +1,22 @@
+# docker-compose.yaml for Elasticsearch
+# Uses an external environment file (elastic.env) for configuration.
+# This approach keeps sensitive or environment-specific variables separate.
+
+version: "3.8"  # Comment this line out if using 'docker compose'
+
+services:
+  elasticsearch:
+    image: {{ELASTICSEARCH_IMAGE}}  # e.g. docker.elastic.co/elasticsearch/elasticsearch:7.17.13
+    container_name: {{CONTAINER_NAME}}  # e.g. elasticsearch
+    env_file:
+      - {{ENV_FILE_PATH}}  # e.g. ./elasticsearch/elastic.env
+    ports:
+      - "{{ELASTICSEARCH_PORT}}:9200"  # e.g. 9200:9200
+    volumes:
+      - {{ELASTICSEARCH_DATA}}:/usr/share/elasticsearch/data  # e.g. ./elasticsearch/data:/usr/share/elasticsearch/data
+    networks:
+      - elastic
+
+networks:
+  elastic:
+    driver: bridge
