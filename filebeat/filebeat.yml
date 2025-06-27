@@ -1,0 +1,32 @@
+# filebeat.yml
+# This configuration file defines Filebeat inputs and output.
+# It specifies multiple log sources and labels them using the `log_type` field.
+# Replace values in {{ }} with your own paths, labels, and hostnames.
+#
+# NOTE: Values set in {{LOG_TYPE_*}} must match the conditional checks in logstash.conf,
+#       e.g. if [log_type] == "entapp"
+
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - {{PATH_TO_LOG_1}}  # e.g. /opt/app-logs/processing_report_prd.log
+    fields:
+      log_type: "{{LOG_TYPE_1}}"  # e.g. raport_sync_prd
+    fields_under_root: true
+
+  - type: log
+    enabled: true
+    paths:
+      - {{PATH_TO_LOG_2}}  # e.g. /opt/app-logs/app.log.*
+      # The wildcard (*) will match any file starting with `app.log.`
+      # Example: app.log.2024-10-11, app.log.2024-10-12, etc.
+      # Useful for picking up log files rotated or stamped with a date.
+    fields:
+      log_type: "{{LOG_TYPE_2}}"  # e.g. entapp
+    fields_under_root: true
+
+output.logstash:
+  hosts: ["{{LOGSTASH_HOST}}:{{LOGSTASH_PORT}}"]  # e.g. elkappvm4:5044
+  ttl: 60s
+  loadbalance: false
