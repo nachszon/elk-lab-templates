@@ -13,10 +13,14 @@ services:
     ports:
       - "{{ELASTICSEARCH_PORT}}:9200"  # e.g. 9200:9200
     volumes:
-      - {{ELASTICSEARCH_DATA}}:/usr/share/elasticsearch/data  # e.g. ./elasticsearch/data:/usr/share/elasticsearch/data
+      - {{ELASTICSEARCH_DATA}}:/usr/share/elasticsearch/data  # e.g. es_data:/usr/share/elasticsearch/data
     networks:
       - elastic
 
 networks:
   elastic:
     driver: bridge
+volumes:
+ es_data:
+  driver: local
+  
